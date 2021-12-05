@@ -5,6 +5,7 @@
 #include <deque>
 #include <array>
 #include <string>
+#include <algorithm>
 
 
 template <class Container>
@@ -35,6 +36,14 @@ void printUniqueWords(const T &begin, const T &end, std::string name){
     printContainer(words, "Unique Words: ");
 }
 
+const auto compGreat = [](const std::string &left, const std::string &right){
+    return left.size() > right.size();
+};
+
+const auto compLess = [](const std::string &left, const std::string &right){
+    return left.size() < right.size();
+};
+
 void task_1(){
     std::vector<std::string> vec {"present","foamy","sun","gray","encourage","sun","gray"};
     std::list<std::string> l {"present","foamy","sun","gray","encourage","sun","gray"};
@@ -51,11 +60,10 @@ void task_1(){
     printUniqueWords(s.begin(), s.end(), "Set");
 }
 
-int main() {
-
-    //task_1();
+void task_2(){
     std::string tmp;
-    std::multiset<std::string> ms;
+    std::multiset<std::string, decltype(compGreat)> ms(compGreat);
+    //std::multiset<std::string, decltype(compLess)> ms(compLess);
 
     while(getline(std::cin, tmp)){
         if(tmp.empty()) break;
@@ -63,6 +71,13 @@ int main() {
     }
 
     printContainer(ms, "Listing", 1);
+}
+
+int main() {
+
+    //task_1();
+    task_2();
+
 
 
     return 0;
